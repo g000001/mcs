@@ -234,12 +234,12 @@
                                          (list 'method ',qualifiers ',specializer-names))
                      (unless gfn-existed-before-p
                        (defun ,global-gfn-name ,lambda-list
-                         (declare (optimize (speed 3) (safety 1)))
+                         (declare #|(optimize (speed 3) (safety 1))|#)
                          (let ((effective-methods
                                 (funcall (%%gfn-discriminating-function %gfn)
                                          %gfn  
                                          ,@required-arguments)))
-                           (declare (optimize (speed 3) (safety 0)))
+                           (declare #|(optimize (speed 3) (safety 0))|#)
                            (funcall (car effective-methods)
                                     effective-methods
                                     ,@all-arguments)))) ))))
