@@ -27,6 +27,7 @@
                (:file "redefine")
                (:file "patches")))
 
+
 (defmethod perform ((o test-op) (c (eql (find-system :mcs))))
   (load-system :mcs)
   (or (flet ((_ (pkg sym)
@@ -36,3 +37,4 @@
            (funcall (_ :fiveam :results-status) result)))
       (error "test-op failed") ))
 
+;;; eof
