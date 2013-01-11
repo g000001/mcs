@@ -1,0 +1,79 @@
+;;; -*- Mode: Lisp; Syntax: Common-Lisp; Base: 10; Package: "USER" -*-
+
+;;;           Copyright  1990, 1991, 1992    BY
+;;;           G M D  
+;;;           Postfach 1316
+;;;           D-5205 Sankt Augustin 1
+;;;           FRG
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; description:    How to load and use the Meta Class System (MCS)?
+;;;
+;;; notes:          Version 1.4.1 (16.11.92)
+;;;
+;;; contact:        Juergen Kopp, Harry Bretthauer
+;;;
+;;; ----------------------------------------------------------------------------
+
+
+;;; The implementation files of MCS are splitted in two directories:
+;;;
+;;;   - "source", to hold the source files
+;;;   - "binary", to hold the binary files.
+
+;;; These two directories should normally be encapsulated in a directory called
+;;; "MCS". The user has to tell the MCS where the source directory is placed by
+;;; setting the global variable
+;;;
+;;;   - *mcs-source-path-name* 
+;;;
+;;; in the source file "mcs.lisp", which is the module file for loading MCS.
+;;; The global variable *mcs-source-path-name* is set automatically for:
+;;;
+;;;   - Macintosh Common Lisp (MCL, CCL)
+;;;   - Allegro Common Lisp (EXCL) on the Sun workstations
+;;;   - Lucid Common Lisp (LUCID) on Sun workstations
+;;;   - TI Common Lisp (TI) on TI Explorer
+;;;   - Austin Kyoto Common Lisp (AKCL) on Sun workstations
+;;;   - CMU Common Lisp (CMU) on Sun workstations
+
+;;; Depending on the Lisp and the File Systems the variables
+;;; *source-file-extension* and *compiled-file-extension* have also be set in
+;;; the module file "mcs.lisp". For them, there are default settings for:
+;;;
+;;;   - Macintosh Common Lisp (MCL, CCL)
+;;;   - Allegro Common Lisp (EXCL) on the Sun workstations
+;;;   - Lucid Common Lisp (LUCID) on Sun workstations
+;;;   - TI Common Lisp (TI) on TI Explorer
+;;;   - Austin Kyoto Common Lisp (AKCL) on Sun workstations
+;;;   - CMU Common Lisp (CMU) on Sun workstations
+
+
+;;; The usual way to use MCS on the Macintosh under MCL could be:
+;;;
+;;;	1. Store the directory "mcs" in the "MCL 2.0" directory
+;;;	2. Start Macintosh Common Lisp
+;;;	3. Load the file "mcs.lisp" from "mcs:source"
+;;;	4a. For a CLtL1 Lisp:
+;;;         Evaluate the form  (use-package 'mcs)
+;;;         in the package you are working
+;;;      b. For a CLtL2 Lisp:
+;;;         Use the package "MCS" avoiding conflicts with "COMMON-LISP", e.g.
+;;;          (defpackage "TEST"
+;;;            (:use "COMMON-LISP")
+;;;            (:shadowing-import-from "MCS" ....))
+;;;
+;;;	Now you can 
+;;;	- define (base, abstract, mixin) classes, 
+;;;              generic functions, methods,
+;;;              instances, ...
+;;;	- call generic functions, ...
+;;;	- explore classes or generic functions 
+;;;	  using the tools under the "Tools" menu ...
+;;;
+;;; For more details look at the documentation of the Meta Class System MCS.
+
+
+;;; eof
+
