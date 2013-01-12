@@ -51,7 +51,7 @@
 ;;; -----------------------------------------------------------------------------------
  
 (defun compute-effective-method (gfn specializers method-combination methods)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (or
   ;; lookup for a subsuming combined method
   (lookup-for-subsuming-eff-method gfn specializers (first methods))
@@ -218,7 +218,7 @@
 (defmacro before-of (applicable-methods) `(svref ,applicable-methods 2))
 
 (defun with-demons-operator (operator-and-applicable-methods &rest args)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((applicable-methods (cadr operator-and-applicable-methods)))
     (let ((primary-methods (primary-of applicable-methods)))
       (dolist (method (before-of applicable-methods)) (apply method args))
@@ -227,14 +227,14 @@
         result))))
 
 (defun with-before-operator (operator-and-applicable-methods &rest args)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((applicable-methods (cadr operator-and-applicable-methods)))
     (let ((primary-methods (primary-of applicable-methods)))
       (dolist (method (before-of applicable-methods)) (apply method args))
       (apply (car primary-methods) primary-methods args))))
 
 (defun with-after-operator (operator-and-applicable-methods &rest args)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((applicable-methods (cadr operator-and-applicable-methods)))
     (let ((primary-methods (primary-of applicable-methods)))
       (let ((result (apply (car primary-methods) primary-methods args)))

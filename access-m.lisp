@@ -61,12 +61,12 @@
                  'qualifiers    ()
                  'function      (get-accessor-fn 'reader pos)))
     #'(lambda (object)
-          (declare (optimize (speed 3) (safety 1)))
+          (declare #|(optimize (speed 3) (safety 1))|#)
           (let ((eff-methods 
                  (funcall (%%gfn-discriminating-function gfn)
                           gfn
                           object)))
-            (declare (optimize (speed 3) (safety 0)))
+            (declare #|(optimize (speed 3) (safety 0))|#)
             (funcall (car eff-methods)
                      eff-methods
                      object)))))
@@ -86,12 +86,12 @@
             'specializers (list class)
             'qualifiers ()
             'function #'(lambda (%next-fns object)
-                          (declare (ignore %next-fns) (optimize (speed 3) (safety 0)))
+                          (declare (ignore %next-fns) #|(optimize (speed 3) (safety 0))|#)
                           (mcs%local-slot-indexed object slot-name
                                                   (%slot-location-of object slot-name))))))
       (add-method gfn method)
       #'(lambda (object)
-          (declare (optimize (speed 3) (safety 1)))
+          (declare #|(optimize (speed 3) (safety 1))|#)
           (let ((eff-methods 
                  (funcall (%%gfn-discriminating-function gfn)
                           gfn
@@ -123,12 +123,12 @@
                  'qualifiers ()
                  'function (get-accessor-fn 'writer pos)))
     #'(lambda (value object)
-        (declare (optimize (speed 3) (safety 1)))
+        (declare #|(optimize (speed 3) (safety 1))|#)
         (let ((eff-methods 
                (funcall (%%gfn-discriminating-function gfn)
                         gfn
                         value object)))
-          (declare (optimize (speed 3) (safety 0)))
+          (declare #|(optimize (speed 3) (safety 0))|#)
           (funcall (car eff-methods)
                    eff-methods
                    value object)))))
@@ -150,19 +150,19 @@
             'specializers (list (find-class 't) class)
             'qualifiers ()
             'function #'(lambda (%next-fns value object)
-                         (declare (ignore %next-fns) (optimize (speed 3) (safety 0)))
+                         (declare (ignore %next-fns) #|(optimize (speed 3) (safety 0))|#)
                          (setf (mcs%local-slot-indexed-low 
                                 object 
                                 (%slot-location-of object slot-name))
                                value)))))
       (add-method gfn method)
       #'(lambda (value object)
-          (declare (optimize (speed 3) (safety 1)))
+          (declare #|(optimize (speed 3) (safety 1))|#)
           (let ((eff-methods 
                  (funcall (%%gfn-discriminating-function gfn)
                           gfn
                           value object)))
-            (declare (optimize (speed 3) (safety 0)))
+            (declare #|(optimize (speed 3) (safety 0))|#)
             (funcall (car eff-methods)
                      eff-methods
                      value object))))))

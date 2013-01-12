@@ -414,13 +414,13 @@
                    (unless gfn-existed-before-p
                      (defun ,gfn-name ,lambda-list
                        (declare ;(special ,gfn-name)
-                        (optimize (speed 3) (safety 1)))
+                        #|(optimize (speed 3) (safety 1))|#)
                        (let ((effective-methods
                               (funcall (%%gfn-discriminating-function %gfn)
                                        %gfn
                                        ,@required-arguments)))
                          (declare ;(special ,gfn-name)
-                          (optimize (speed 3) (safety 0)))
+                          #|(optimize (speed 3) (safety 0))|#)
                          (funcall (car effective-methods)
                                   effective-methods
                                   ,@all-arguments)))))))
@@ -756,8 +756,7 @@
 ;;; External constructor of generic functions
 
 (defun ensure-gfn (fn-specifier lambda-list method-combination &rest plist)
-  (declare (optimize (speed 3) (safety 3))
-           (ignore gfn-class))
+  (declare (optimize (speed 3) (safety 3)))
   (let ((global-gfn-name (cond
                           ((symbolp fn-specifier) fn-specifier)
                           ((setf-form-p fn-specifier)
@@ -794,12 +793,12 @@
   (setf (symbol-function gfn-name) 
         (%set-anonymous-function-name
          #'(lambda (&rest all-arguments)
-             (declare (optimize (speed 3) (safety 1)))
+             (declare #|(optimize (speed 3) (safety 1))|#)
              (let ((effective-methods
                     (apply (%%gfn-discriminating-function %gfn)
                            %gfn
                            all-arguments)))
-               (declare (optimize (speed 3) (safety 0)))
+               (declare #|(optimize (speed 3) (safety 0))|#)
                (apply (car effective-methods)
                       effective-methods
                       all-arguments)))
@@ -822,7 +821,7 @@
 
 (setf (symbol-function 'check-for-existing-gfn)
       #'(lambda (fn-specifier lambda-list plist)
-          (declare (optimize (speed 3) (safety 0))
+          (declare #|(optimize (speed 3) (safety 0))|#
                    (ignore plist))
           ;; check for already existing generic function
           (let ((gfn (find-gfn fn-specifier)))
@@ -861,7 +860,7 @@
   (declare (optimize (speed 3) (safety 0))
            (ignore method))
   (let ((effective-lambda-list (mcs-remq '&rest lambda-list))
-        (declarations `((declare (optimize (speed 3) (safety ,*method-safety*))))))
+        (declarations `((declare #|(optimize (speed 3) (safety ,*method-safety*))|#))))
     (dolist (form body)
       (cond 
        ((and (consp form) (eq (car form) 'declare))
@@ -930,7 +929,7 @@
   gfn)
 
 (defun update-discriminating-function (gfn new-method old-methods)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((signature-change-p ())
         (old-signature (%%gfn-signature gfn))
         
@@ -968,7 +967,7 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun make-entry-in-alist2 (specializers function)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((rev-spec (reverse specializers)) result)
     (setq result (cons (first rev-spec)
                        function)
@@ -977,7 +976,7 @@
       (setq result (cons key (list result))))))
 
 (defun ADD-COMBINED-METHOD (gfn-object specializers function)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((alist-to-modify
          (let ((result (cons t (%%gfn-combined-methods gfn-object)))
                ;cons for iteration

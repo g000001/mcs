@@ -222,7 +222,7 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defmethod redefine-class ((class built-in) metaclass initargs)
-  (declare (ignore name initargs metaclass))  
+  (declare (ignore initargs metaclass))  
   (error "Can't redefine ~S." class))
 
 ;;; -----------------------------------------------------------------------------------

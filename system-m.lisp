@@ -328,7 +328,7 @@
 ;;;          24.02.90   *hb*    doesn't call has-slot
 
 (defun slot-exists-p (object slot-name)
-  (declare (optimize (speed 3) (safety 1)))
+  (declare #|(optimize (speed 3) (safety 1))|#)
   (and (%object-p object)
     (%slot-location-of object slot-name)
     t))
@@ -343,7 +343,7 @@
 ;;; CLOS:      compatible.
 
 (defun slot-makunbound (object slot-name)
-  (declare (optimize (speed 3) (safety 1)))
+  (declare #|(optimize (speed 3) (safety 1))|#)
   (if (%object-p object)
     (let ((slot-position (%slot-location-of object slot-name)))
     (declare (optimize (speed 3) (safety 0)))
@@ -362,7 +362,7 @@
 ;;; CLOS:      compatible.
 
 (defun slot-boundp (object slot-name)
-  (declare (optimize (speed 3) (safety 1)))
+  (declare #|(optimize (speed 3) (safety 1))|#)
   (if (%object-p object)
     (let ((slot-position (%slot-location-of object slot-name)))
       (declare (optimize (speed 3) (safety 0)))
@@ -380,7 +380,7 @@
 
 (setf (symbol-function 'check-for-existing-gfn)
       #'(lambda (fn-specifier lambda-list plist)
-          (declare (optimize (speed 3) (safety 0))
+          (declare #|(optimize (speed 3) (safety 0))|#
                    (ignore plist))
           ;; check for already existing generic function
           (let ((gfn (find-gfn fn-specifier)))
