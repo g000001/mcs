@@ -96,7 +96,7 @@
                  (funcall (%%gfn-discriminating-function gfn)
                           gfn
                           object)))
-            (declare (optimize (speed 3) (safety 0)))
+            (declare #|(optimize (speed 3) (safety 0))|#)
             (funcall (car eff-methods)
                      eff-methods
                      object))))))
