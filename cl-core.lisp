@@ -371,8 +371,7 @@
 ;;; -----------------------------------------------------------------------------------
 ;;; The Standard-slot-definition Constructor
 (defun make-slot-definition (plist)
-  (declare (optimize (speed 3) (safety 0))
-           (ignore class-name))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((name ())
         (initform '<unbound>)
         (initfunction nil)
@@ -430,7 +429,7 @@
 ;;; -----------------------------------------------------------------------------------
 ;;; Bootstrap Generic Function Constructor
 (defun make-generic (class plist)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let (gfn-name lambda-list method-class method-combination documentation discr-name)
     (doplist ((key val) plist)
       (case key

@@ -342,7 +342,7 @@ Arguments: ((key val) plist additional-variable-list result-form)
    ))
 
 (defun FIND-METHOD-ENTRY (method-table specializers)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (case (length specializers)
            (1 (get-method-entry-pair (first specializers) method-table))
            (2 (get-method-entry-pair (second specializers)

@@ -229,7 +229,7 @@
      new-array))
 
 (defun extend-accessor-fns (no-of-entries)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   ; adjust the arrays with the accessor-fns and generates the apropriate accessors
   (let (array-r array-w  ; fuer schnelleren Zugriff in der loop
                 old-fill-pointer new-fill-pointer)
@@ -282,7 +282,7 @@
        (setf ,fill-pointer ,no-of-entries))))
 
 (defun get-accessor-fn (accessor-type location)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((fill-pointer *local-fns-fill-pointer*))
     (if (>= location fill-pointer)
       (extend-accessor-fns (max 8 (- location (1- fill-pointer))))))

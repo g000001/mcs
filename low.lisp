@@ -48,7 +48,7 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun class-accessor (object slot-name)
-  (declare (optimize (speed 3) (safety 0))
+  (declare #|(optimize (speed 3) (safety 0))|#
            (ignore object))
   (case slot-name
     (name 0) (superclasses 1) (slots 2) (initargs 3)
@@ -59,7 +59,7 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun instantiable-class-accessor (object slot-name)
-  (declare (optimize (speed 3) (safety 0))
+  (declare #|(optimize (speed 3) (safety 0))|#
            (ignore object))
   (case slot-name
     (name 0) (superclasses 1) (slots 2) (initargs 3)
@@ -245,11 +245,11 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun obj-type-of (object)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (%type-of object))
 
 (defun obj-typep (object type)
-  (declare (optimize (speed 3) (safety 1)))
+  (declare #|(optimize (speed 3) (safety 1))|#)
   (%typep object type))
 
 (defun obj-subtypep (type1 type2)
@@ -257,7 +257,7 @@
   (%subtypep type1 type2))
 
 (defun subclassp (class1 class2)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (if (mcs-memq class2 (%%class-precedence-list class1))
     t))
 
@@ -268,18 +268,18 @@
 
 
 (defun method-p (object)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (and (%object-p object)
        (mcs%typep object 'method)))
  
 (defun generic-p (object)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (if (symbolp object)
     (if (find-gfn object) t)
     (mcs%typep object 'generic-function)))
 
 (defun obj-copy (obj)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (if (%object-p obj)
     (mcs%copy obj)
     (error "Can't make a copy of ~S." obj)))
@@ -298,7 +298,7 @@
 ;; (setf *class-cl* (find-class 'class))  ;; has to be done later
 
 (defun class-p (object)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (and (%object-p object)
        (mcs%typep object *class-cl*)))
 
@@ -312,7 +312,7 @@
 ;;; CLOS:      no such function.
 
 (defun metaclass-p (object)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (and (%object-p object)
        (mcs%typep object *class-cl*)
        (mcs-memq *class-cl* (%%class-precedence-list object))
@@ -323,9 +323,9 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun gen-reader-fn (index)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   `(lambda (%next-fns object)
-     (declare (optimize (speed 3) (safety 0))
+     (declare #|(optimize (speed 3) (safety 0))|#
               (ignore %next-fns))
      (let ((result (mcs%obj-ref object ,index)))
        (if (eq result '<unbound>) 
@@ -334,9 +334,9 @@
          result))) )
 
 (defun gen-writer-fn (index)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   `(lambda (%next-fns value object)
-     (declare (optimize (speed 3) (safety 0))
+     (declare #|(optimize (speed 3) (safety 0))|#
               (ignore %next-fns))
      (setf (mcs%obj-ref object ,index) value)) )
 
@@ -345,9 +345,9 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun gen-reader-closure (index)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   #'(lambda (%next-fns object)
-     (declare (optimize (speed 3) (safety 0))
+     (declare #|(optimize (speed 3) (safety 0))|#
               (ignore %next-fns))
      (let ((result (mcs%obj-ref object index)))
        (if (eq result '<unbound>) 
@@ -356,9 +356,9 @@
          result))) )
 
 (defun gen-writer-closure (index)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   #'(lambda (%next-fns value object)
-     (declare (optimize (speed 3) (safety 0))
+     (declare #|(optimize (speed 3) (safety 0))|#
               (ignore %next-fns))
      (setf (mcs%obj-ref object index) value)) )
 

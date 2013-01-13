@@ -6,6 +6,7 @@
   :serial t
   :depends-on (:fiveam)
   :components ((:file "mcs-pkg")
+               #+sbcl (:file "fdecls")
                (:file "macros")
                (:file "low-it")
                (:file "low")
@@ -20,8 +21,8 @@
                (:file "class-m")
                (:file "system-m")
                (:file "util")
-               ;;    (gfn-comp             :depends-on (gfn-look) )
-               #+(and :ccl (not :ccl-2)) (mcsmenus (macros globals gfn-core gfn-boot))
+               ;; (gfn-comp :depends-on (gfn-look) )
+               ;; #+(and :ccl (not :ccl-2)) (mcsmenus (macros globals gfn-core gfn-boot))
                ;;    #-(or :EXCL
                ;;          :TI) (optimize (system-m gfn-comp class-m))
                (:file "redefine")

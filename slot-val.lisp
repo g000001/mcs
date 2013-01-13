@@ -42,7 +42,7 @@
   `(funcall (mcs%slot-fn-of ,object) ,object ,slot-name))
 
 (defun mcs%slot-value-low (object slot-name)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   "No check if slot is unbound, e. g. has the value '<unbound>"
   (let ((slot-position (%slot-location-of object slot-name)))
     (declare (optimize (speed 3) (safety 0)))
@@ -51,7 +51,7 @@
       (slot-missing (mcs%class-of object) object slot-name 'slot-value))))
         
 (defun mcs%set-slot-value-low (object slot-name value)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((slot-position (%slot-location-of object slot-name)))
     (declare (optimize (speed 3) (safety 0)))
     (if slot-position  
@@ -66,7 +66,7 @@
   (if (%object-p object)
     (let ((result 
            (let ((slot-position (%slot-location-of object slot-name)))
-             (declare (optimize (speed 3) (safety 0)))
+             (declare #|(optimize (speed 3) (safety 0))|#)
              (if slot-position
                (mcs%obj-ref object slot-position)
                (slot-missing (mcs%class-of object) object slot-name 'slot-value))) ))
@@ -76,10 +76,10 @@
     (slot-missing (built-in-class-of object) object slot-name 'slot-value)))
 
 (defun mcs%set-slot-value (object slot-name value)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (if (%object-p object)
     (let ((slot-position (%slot-location-of object slot-name)))
-      (declare (optimize (speed 3) (safety 0)))
+      (declare #|(optimize (speed 3) (safety 0))|#)
       (if slot-position  
         (setf (mcs%obj-ref object slot-position) value)
         (slot-missing (mcs%class-of object) object slot-name 'setf value)))
@@ -217,7 +217,7 @@
 ;;; -----------------------------------------------------------------------------------
 
 (defun general-slot-position (object slot-name)
-  (declare (optimize (speed 3) (safety 0)))
+  (declare #|(optimize (speed 3) (safety 0))|#)
   (let ((slots (%%class-slots (mcs%class-of object)))
         (pos 0))
     (loop
